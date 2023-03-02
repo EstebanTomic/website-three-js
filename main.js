@@ -5,7 +5,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // Setup
 
 const scene = new THREE.Scene();
-let cloudParticles = [], flash, rain, rainGeo, rainCount = 10000;
+let cloudParticles = [], flash, rain, rainGeo, rainCount = 25000, cloud;
 
 const camera = new THREE.PerspectiveCamera(60,window.innerWidth / window.innerHeight, 1, 1000);
 camera.position.z = 1;
@@ -43,9 +43,9 @@ rainGeo = new THREE.BufferGeometry();
 const vertices = [];
 for (let i = 0; i < rainCount; i++) {
     vertices.push(
-        Math.random() * 120 - 60,
-        Math.random() * 180 - 80,
-        Math.random() * 130 - 60
+        Math.random() * 520 - 160,
+        Math.random() * 1500 - 150,
+        Math.random() * 230 - 160
     );
 }
 rainGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
@@ -68,7 +68,7 @@ loader.load("smoke.png", function(texture){
     });
 
     for(let p=0; p<25; p++) {
-        let cloud = new THREE.Mesh(cloudGeo,cloudMaterial);
+        cloud = new THREE.Mesh(cloudGeo,cloudMaterial);
         cloud.position.set(
             Math.random()*800 -400,
             500,
@@ -86,8 +86,9 @@ loader.load("smoke.png", function(texture){
 
 
 
-// const controls = new OrbitControls(camera, renderer.domElement);
 
+
+// const controls = new OrbitControls(camera, renderer.domElement);
 
 // Scroll Animation
 //function moveCamera() {
@@ -123,7 +124,6 @@ function animate() {
     // Animacion LLuvia
     rainVariation();
 
-
     rain.rotation.y +=0.002;
     if(Math.random() > 0.93 || flash.power > 100) {
         if(flash.power < 100)
@@ -134,7 +134,6 @@ function animate() {
             );
         flash.power = 50 + Math.random() * 500;
     }
-
 
     camera.position.y += 0.3;
 
